@@ -1,0 +1,66 @@
+import redis from "redis";
+import { promisifyAll } from "bluebird";
+
+const options = {
+	host: "",
+	port: 15001,
+	password: "123",
+	detect_buffers: true,
+	retry_strategy: function (options) {
+		if (options.error && options.error.code === "ECONNREFUSED") {
+			// End reconnecting on a specific error and flush all commands with
+			// a individual error
+			return new Error("The server refused the connection");
+		}
+		if (options.total_retry_time > 1000 * 60 * 60) {
+			// End reconnecting after a specific timeout and flush all commands
+			// with a individual error
+			return new Error("Retry time exhausted");
+		}
+		if (options.attempt > 10) {
+			// End reconnecting with built in error
+			return undefined;
+		}
+		// reconnect after
+		return Math.min(options.attempt * 100, 3000);
+	},
+};
+
+const client = promisifyAll(redis.createClient(options));
+client.on("error", (err) => {
+	console.log("Redis Client Error:" + err);
+});
+
+const setValue = (key, value) => {
+	if (typeof value === "undefined" || value == "" || value == null) {
+		return;
+	}
+
+	if (typeof value === "string") {
+		client.setValue(key, value);
+	} else if (typeof value === "object") {
+		Object.keys(value).forEach((item) => {
+			client.hset(key, item, value[item], redis.print);
+		});
+	}
+};
+
+const delValue = (key) => {
+	client.del(key, (err, res) => {
+		if (res === 1) {
+			console.log("delete successfully");
+		} else {
+			console.log("delete redis key error:" + err);
+		}
+	});
+};
+
+const getValue = (key) => {
+	return client.getAsync(key);
+};
+
+const getHValue = (key) => {
+	return client.hgetallAsync(key);
+};
+
+export { client, setValue, getValue, getHValue, delValue };
