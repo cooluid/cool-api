@@ -1,5 +1,5 @@
 import svgCaptcha from "svg-captcha";
-import { getValue, setValue } from "../config/RedisConfig";
+import { setValue } from "@/config/RedisConfig";
 
 class PublicController {
 	constructor() {}
@@ -16,10 +16,10 @@ class PublicController {
 			noise: Math.floor(Math.random() * 5),
 		});
 
-		setValue(body.sid, newCaptcha.text); 
-		getValue(body.sid).then((res) => {
-			console.log(res);
-		});
+		setValue(body.sid, newCaptcha.text, 10 * 60);
+		// getValue(body.sid).then((res) => {
+		// 	console.log(res);
+		// });
 		ctx.body = {
 			code: 200,
 			data: newCaptcha.data,
