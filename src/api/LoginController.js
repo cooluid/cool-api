@@ -2,36 +2,40 @@ import send from "../config/MailConfig";
 import moment from "moment";
 
 class LoginController {
-	constructor() {
-	}
+	constructor() {}
 
 	async testApi(ctx) {
-		console.log(ctx.request)
+		console.log(ctx.request);
 		ctx.body = {
-			code: 200
-		}
+			code: 200,
+		};
 	}
 
 	async forget(ctx) {
-		const {body} = ctx.request
+		const { body } = ctx.request;
 		try {
 			let result = await send({
-				code: '1234',
-				from: '社区激活验证码 350670694@qq.com',
-				to: '350670694@qq.com',
-				expire: moment().add(30, 'm').format('YYYY-MM-DD HH:mm:ss'),
+				code: "1234",
+				from: "社区激活验证码 350670694@qq.com",
+				to: "350670694@qq.com",
+				expire: moment().add(30, "m").format("YYYY-MM-DD HH:mm:ss"),
 				email: body.username,
-				user: 'cool'
-			})
+				user: "cool",
+			});
 			ctx.body = {
 				code: 200,
 				data: result,
-				msg: `邮件发送成功`
-			}
+				msg: `邮件发送成功`,
+			};
 		} catch (e) {
-			console.log(`错误的数据：${e}`)
+			console.log(`错误的数据：${e}`);
 		}
+	}
+
+	async login(ctx) {
+		const body = ctx.request.query;
+		console.log(body);
 	}
 }
 
-export default new LoginController()
+export default new LoginController();
