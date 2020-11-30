@@ -16,7 +16,7 @@ class PublicController {
 			noise: Math.floor(Math.random() * 5),
 		});
 
-		setValue(body.sid, newCaptcha.text);
+		setValue(body.sid, newCaptcha.text); 
 		getValue(body.sid).then((res) => {
 			console.log(res);
 		});

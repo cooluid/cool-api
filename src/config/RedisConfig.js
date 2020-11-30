@@ -1,10 +1,11 @@
 import redis from "redis";
 import { promisifyAll } from "bluebird";
+import config from "./index";
 
 const options = {
-	host: "",
-	port: 15001,
-	password: "123",
+	host: config.REDIS.host,
+	port: config.REDIS.port,
+	password: config.REDIS.password,
 	detect_buffers: true,
 	retry_strategy: function (options) {
 		if (options.error && options.error.code === "ECONNREFUSED") {
@@ -37,7 +38,7 @@ const setValue = (key, value) => {
 	}
 
 	if (typeof value === "string") {
-		client.setValue(key, value);
+		client.set(key, value);
 	} else if (typeof value === "object") {
 		Object.keys(value).forEach((item) => {
 			client.hset(key, item, value[item], redis.print);
