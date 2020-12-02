@@ -1,5 +1,7 @@
 import send from "../config/MailConfig";
 import moment from "moment";
+import jsonwebtoken from "jsonwebtoken";
+import config from "../config/index";
 
 class LoginController {
 	constructor() {}
@@ -34,7 +36,15 @@ class LoginController {
 
 	async login(ctx) {
 		const body = ctx.request.query;
-		console.log(body);
+		let token = jsonwebtoken.sign({ _id: "cooluid" }, config.JWT_SECRET, {
+			expiresIn: "1d",
+		});
+		console.log("hello world");
+
+		ctx.body = {
+			code: 200,
+			token: token,
+		};
 	}
 }
 
