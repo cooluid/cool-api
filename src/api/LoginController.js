@@ -2,6 +2,7 @@ import send from "../config/MailConfig";
 import moment from "moment";
 import jsonwebtoken from "jsonwebtoken";
 import config from "../config/index";
+import { checkCode } from "@/common/Utils";
 
 class LoginController {
 	constructor() {}
@@ -35,16 +36,34 @@ class LoginController {
 	}
 
 	async login(ctx) {
-		const body = ctx.request.query;
-		let token = jsonwebtoken.sign({ _id: "cooluid" }, config.JWT_SECRET, {
-			expiresIn: "1d",
-		});
-		console.log("hello world");
+		const { body } = ctx.request;
+		let sid = body.sid;
+		let code = body.code;
 
-		ctx.body = {
-			code: 200,
-			token: token,
-		};
+		if (checkCode(sid, code)) {
+			let checkUserPassword = "";
+			if (checkUserPassword) {
+				let token = jsonwebtoken.sign({ _id: "cooluid" }, config.JWT_SECRET, {
+					expiresIn: "1d",
+				});
+				console.log("hello world");
+
+				ctx.body = {
+					code: 200,
+					token: token,
+				};
+			} else {
+				ctx.body = {
+					code: 404,
+					msg: "用户名或者密码错误",
+				};
+			}
+		} else {
+			ctx.body = {
+				code: 401,
+				msg: "验证码不正确",
+			};
+		}
 	}
 }
 
