@@ -5,7 +5,6 @@ const router = new Router();
 
 router.prefix("/login");
 router.post("/forget", loginController.forget);
-router.get("/testapi", loginController.testApi);
 router.post("/login", loginController.login);
 
 export default router;

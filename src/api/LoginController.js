@@ -3,6 +3,7 @@ import moment from "moment";
 import jsonwebtoken from "jsonwebtoken";
 import config from "../config/index";
 import { checkCode } from "@/common/Utils";
+import User from "@/model/User";
 
 class LoginController {
 	constructor() {}
@@ -39,9 +40,11 @@ class LoginController {
 		const { body } = ctx.request;
 		let sid = body.sid;
 		let code = body.code;
+		let result = await checkCode(sid, code);
 
-		if (checkCode(sid, code)) {
-			let checkUserPassword = "";
+		if (result) {
+			let user = await User.findOne({ username: body.username });
+			let checkUserPassword = user.password === body.password;
 			if (checkUserPassword) {
 				let token = jsonwebtoken.sign({ _id: "cooluid" }, config.JWT_SECRET, {
 					expiresIn: "1d",
