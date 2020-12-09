@@ -41,7 +41,7 @@ class LoginController {
 		let sid = body.sid;
 		let code = body.code;
 		let result = await checkCode(sid, code);
-
+		
 		if (result) {
 			let user = await User.findOne({ username: body.username });
 			let checkUserPassword = user.password === body.password;
