@@ -41,16 +41,16 @@ const webpackconfig = {
 			},
 		}),
 	],
-	node: {
-		console: true,
-		global: true,
-		process: true,
-		Buffer: true,
-		__filename: true,
-		__dirname: true,
-		setImmediate: true,
-		path: true,
-	},
+	// node: {
+	// 	console: true,
+	// 	global: true,
+	// 	process: true,
+	// 	Buffer: true,
+	// 	__filename: true,
+	// 	__dirname: true,
+	// 	setImmediate: true,
+	// 	path: true,
+	// },
 };
 
 // console.log(webpackconfig)

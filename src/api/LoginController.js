@@ -45,10 +45,8 @@ class LoginController {
 
 		if (result) {
 			let user = await User.findOne({ username: body.username });
-			let checkUserPassword = await bcrypt.compare(
-				body.password,
-				user.password
-			);
+			let checkUserPassword =
+				(await user) && bcrypt.compare(body.password, user.password);
 			if (checkUserPassword) {
 				let token = jsonwebtoken.sign({ _id: "cooluid" }, config.JWT_SECRET, {
 					expiresIn: "1d",

@@ -20,7 +20,10 @@ mongoose.connection.on("connected", () => {
  * 连接失败
  */
 mongoose.connection.on("error", (err) => {
-	console.log(`mongoose connection error:` + config.DB_URL);
+	console.log(
+		"🚀 ~ file: DBHelper.js ~ line 23 ~ mongoose.connection.on ~ err",
+		err + ":" + config.DB_URL
+	);
 });
 
 /**
