@@ -13,13 +13,14 @@
 		"dev": "npm-run-all -p watch debug"
 	},
 	"keywords": [],
-	"author": "brian@toimc.com",
+	"author": "400822@163.com",
 	"license": "ISC",
 	"dependencies": {
 		"@koa/cors": "^3.1.0",
 		"axios": "^0.21.1",
 		"bcrypt": "^5.0.0",
 		"bluebird": "^3.7.2",
+		"dayjs": "^1.9.8",
 		"jsonwebtoken": "^8.5.1",
 		"koa": "^2.13.0",
 		"koa-body": "^4.2.0",
@@ -31,7 +32,6 @@
 		"koa-jwt": "^4.0.0",
 		"koa-router": "^10.0.0",
 		"koa-static": "^5.0.0",
-		"moment": "^2.29.1",
 		"mongoose": "^5.11.8",
 		"nodemailer": "^6.4.17",
 		"redis": "^3.0.2",
