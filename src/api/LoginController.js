@@ -51,11 +51,17 @@ class LoginController {
 				let token = jsonwebtoken.sign({ _id: "cooluid" }, config.JWT_SECRET, {
 					expiresIn: "1d",
 				});
-				console.log("hello world");
+
+				let userObj = user.toJSON();
+				let arr = ["password", "roles", "username"];
+				arr.map((item) => {
+					delete userObj[item];
+				});
 
 				ctx.body = {
 					code: 200,
 					token: token,
+					data: userObj,
 					msg: "登录成功",
 				};
 			} else {
