@@ -25,6 +25,7 @@ class UserController {
 					msg: "已经签到",
 					favs: user.favs,
 					count: user.count,
+					lastSign: record.created,
 				};
 				return;
 			}
@@ -103,6 +104,7 @@ class UserController {
 			code: 200,
 			msg: "请求成功",
 			...result,
+			lastSign: newRecord.created,
 		};
 	}
 }

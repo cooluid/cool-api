@@ -65,6 +65,8 @@ class LoginController {
 					b =
 						moment(record.created).format("YYYY-MM-DD") ===
 						moment().format("YYYY-MM-DD");
+
+					userObj.lastSign = record.created;
 				}
 				userObj.isSign = b;
 				ctx.body = {
