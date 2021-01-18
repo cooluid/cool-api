@@ -30,7 +30,7 @@ class UserController {
 			}
 			//连续签到
 			if (
-				moment(record.lastSign).format("YYYY-MM-DD") ===
+				moment(record.created).format("YYYY-MM-DD") ===
 				moment().subtract(1, "days").format("YYYY-MM-DD")
 			) {
 				count += 1;
@@ -75,7 +75,6 @@ class UserController {
 			newRecord = new SignRecord({
 				uid: obj._id,
 				favs: fav,
-				lastSign: record.created,
 			});
 			await newRecord.save();
 		} else {
@@ -92,7 +91,6 @@ class UserController {
 			newRecord = new SignRecord({
 				uid: obj._id,
 				favs: 5,
-				lastSign: moment().format("YYYY-MM-DD HH:mm:ss"),
 			});
 
 			await newRecord.save();

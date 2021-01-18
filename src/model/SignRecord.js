@@ -7,7 +7,6 @@ const SingRecordSchema = new Schema({
 	uid: { type: String, ref: "users" },
 	created: { type: Date },
 	favs: { type: Number },
-	lastSign: { type: Date },
 });
 
 SingRecordSchema.pre("save", function (next) {

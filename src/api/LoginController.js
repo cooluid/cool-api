@@ -5,6 +5,7 @@ import jsonwebtoken from "jsonwebtoken";
 import config from "../config/index";
 import { checkCode } from "@/common/Utils";
 import User from "@/model/User";
+import signRecord from "@/model/SignRecord";
 
 class LoginController {
 	constructor() {}
@@ -58,6 +59,14 @@ class LoginController {
 					delete userObj[item];
 				});
 
+				let record = await signRecord.findByUid(user._id);
+				let b = false;
+				if (record) {
+					b =
+						moment(record.created).format("YYYY-MM-DD") ===
+						moment().format("YYYY-MM-DD");
+				}
+				userObj.isSign = b;
 				ctx.body = {
 					code: 200,
 					token: token,
